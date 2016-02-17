@@ -1,0 +1,38 @@
+load functie {
+	variabele canvas is het element met het id "canvas" in de html;
+	variable ctx is de variabele die aangeeft dat er in 2d wordt gewerkt in de canvas;
+
+	canvas breedte = 800 pixels;
+	canvas hoogte = 800 pixels;
+	canvas omheining is 2 pixels dik en zwart van kleur;
+
+	functie MakeOuterObject(); (Maak buitenste vierkant)
+	functie MakeInnerObject(); (Maak binnenste vierkant)
+
+	Zet een interval die functie Won() oproept om de 20 milliseconden;
+}
+
+variabele win is false;
+variabele ExpandSpeed is 25;
+
+variabele Color1 is een array met de kleuren "rood", "groen", "geel";
+variabele Outercolor is een random nummer met als uitkomst 1, 2 of 3;
+
+variabele Color2 is een array met de kleuren "oranje", "violet", "paars";
+variabele InnerColor is een random nummer met als uitkomst 1, 2 of 3;
+
+variabele InnerObject {
+	breedte is 100 pixels,
+	hoogte is 100 pixels
+}
+
+variabele OuterObject {
+	breedte is 100 pixels,
+	hoogte is 100 pixels
+}
+
+functie MakeOuterObject() {
+	variabele x is (de breedte van de canvas delen door 2 minus de breedte van InnerObject / 2);
+	variabele y is (de hoogte van de canvas delen door 2 minus de hoogte van InnerObject / 2);
+}
+
