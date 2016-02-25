@@ -4,44 +4,50 @@ window.addEventListener("load", function() {
 
 	canvas.width = 800;
 	canvas.height = 800;
-	canvas.style.border = "2px solid black";
+	//canvas.style.border = "2px solid black";
+	Initialize();
 	MakeOuterObject();
 	MakeInnerObject();
 
-	setInterval(function(){Won()}, 20);
+	setInterval(function(){draw()}, 20);
+	//setInterval(function(){update()}, 20);
 	setInterval(function(){ShrinkObject()}, 50);
 });
-var win = false;
-var ExpandSpeed = 10;
-var ShrinkSpeed = 2;
-
-var ColorList1 = ["red", "green", "yellow"];
-var OuterColor = Math.floor(Math.random()*ColorList1.length);
-
-var ColorList2 = ["orange", "violet", "purple"];
-var InnerColor = Math.floor(Math.random()*ColorList2.length);
 
 var InnerObject = {
 	width: 100,
 	height: 100
 }
 
+function Initialize() {
+	ExpandSpeed = 10;
+	ShrinkSpeed = 2;
+	MoveSpeed = 1;
+	win = false;
+
+	ColorList1 = ["red", "green"];
+	OuterColor = Math.floor(Math.random()*ColorList1.length);
+
+	ColorList2 = ["orange", "violet", "purple"];
+	InnerColor = Math.floor(Math.random()*ColorList2.length);
+
+	OuterWidths = [100, 150, 200, 250];
+	OuterWH = Math.floor(Math.random()*OuterWidths.length);
+		
+	InnerX = 600;
+	InnerY = 600;
+	OuterX = 50;
+	OuterY = 50;
+}
 
 function MakeInnerObject() {
-	x = (canvas.width / 2 - (InnerObject.width / 2));
-	y = (canvas.height / 2 - (InnerObject.height / 2));
-
 	ctx.fillStyle = (ColorList2[InnerColor]);
-	ctx.fillRect(x, y, InnerObject.width, InnerObject.height);
+	ctx.fillRect(InnerX, InnerY, InnerObject.width, InnerObject.height);
 }
 
 function MakeOuterObject() {
-	WH = Math.floor(Math.random()*600) + 200;
-
-	x = (canvas.width / 2 - (WH / 2));
-	y = (canvas.height / 2 - (WH / 2));
 	ctx.strokeStyle = (ColorList1[OuterColor]);
-	ctx.strokeRect(x, y, WH, WH);
+	ctx.strokeRect(OuterX, OuterY, OuterWidths[OuterWH], OuterWidths[OuterWH]);
 }
 
 function ShrinkObject() {
@@ -49,14 +55,15 @@ function ShrinkObject() {
 		InnerObject.width = 0;
 		InnerObject.height = 0;
 	}
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-	InnerObject.width -= ShrinkSpeed;
-	InnerObject.height -= ShrinkSpeed;
-	MakeInnerObject();
+
+	if (win == false) {
+		InnerObject.width -= ShrinkSpeed;
+		InnerObject.height -= ShrinkSpeed;
+	}
 }
 
-function Won() {
-	if (InnerObject.width >= WH && InnerObject.height >= WH) {
+function update() {
+	if (InnerObject.width == OuterWH[OuterWidths] && InnerObject.height == OuterWH[OuterWidths]) {
 		win = true;
 		setTimeout(function(){ 
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -68,6 +75,32 @@ function Won() {
 			ctx.fillText("You Won!",180,300);
 		}, 150);
 	}
+	else {
+		setTimeout(function(){ 
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			ctx.fillStyle = "black";
+			ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+			ctx.font = "90px Verdana";
+			ctx.fillStyle = "#3366FF";
+			ctx.fillText("You've Lost!",150,300);
+		}, 100);
+	}
+}
+
+function draw() {
+	if (InnerY != OuterY && InnerX != OuterX) {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		InnerX = (InnerX -= MoveSpeed);
+		InnerY = (InnerY -= MoveSpeed);
+		MakeInnerObject();
+		MakeOuterObject();
+	}
+	else {
+		update();
+	}
+
+	
 }
 
 document.onkeyup = function(evt) {
@@ -75,7 +108,6 @@ document.onkeyup = function(evt) {
 	if (evt.keyCode == Space && win == false) {
 		InnerObject.width += ExpandSpeed;
 		InnerObject.height += ExpandSpeed;
-		MakeInnerObject();
 	}
 
 	if (evt.keyCode == Space && win == true) {
