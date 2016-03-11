@@ -1,38 +1,64 @@
-load functie {
-	variabele canvas is het element met het id "canvas" in de html;
-	variable ctx is de variabele die aangeeft dat er in 2d wordt gewerkt in de canvas;
+function when html page is loaded() {
+	get canvas id;
+	get 2d context of canvas;
 
-	canvas breedte = 800 pixels;
-	canvas hoogte = 800 pixels;
-	canvas omheining is 2 pixels dik en zwart van kleur;
+	set canvas width to 800 pixels;
+	set canvas height to 800 pixels;
 
-	functie MakeOuterObject(); (Maak buitenste vierkant)
-	functie MakeInnerObject(); (Maak binnenste vierkant)
+	call function Initialize();
+	set canvas text font;
+	StartText is "Press L to begin";
+	draw StartText on canvas;
 
-	Zet een interval die functie Won() oproept om de 20 milliseconden;
+	set interval of 1 second {
+		if Timer is equal to 0 
+			set the Timer back to zero;
+			End The Game;
+		if the timer is not 0 
+			do 1 minus Timer;
+	}
+
 }
 
-variabele win is false;
-variabele ExpandSpeed is 25;
 
-variabele Color1 is een array met de kleuren "rood", "groen", "geel";
-variabele Outercolor is een random nummer met als uitkomst 1, 2 of 3;
-
-variabele Color2 is een array met de kleuren "oranje", "violet", "paars";
-variabele InnerColor is een random nummer met als uitkomst 1, 2 of 3;
-
-variabele InnerObject {
-	breedte is 100 pixels,
-	hoogte is 100 pixels
+object player {
+	width of player is 100 pixels,
+	height of player is 100 pixels;
 }
 
-variabele OuterObject {
-	breedte is 100 pixels,
-	hoogte is 100 pixels
+function BeginGame {
+	Play the game music;
+	variable Drawing is a setinterval of 20 milliseconds with the function to draw();
+	variable Shrinking is a setinterval of the number in shrinkIntervalTime to run the function ChangeObject();
 }
 
-functie MakeOuterObject() {
-	variabele x is (de breedte van de canvas delen door 2 minus de breedte van InnerObject / 2);
-	variabele y is (de hoogte van de canvas delen door 2 minus de hoogte van InnerObject / 2);
+function EndGame(){
+	Turn off the interval of the variable Drawing;
+	Turn off the interval of the variable Shrinking;
+	Clear the canvas;
+
+	Endtext is "Je tijd is om";
+	draw EndText on the canvas;
+
+	EndScore is "Je eind score is: " plus het scoreNumber plus " punten";
+	draw EndScore on the canvas;
+
+
 }
 
+function Intialize() {
+	
+	variable Game is set to false;
+	variable ExpandSpeed is set to 10;
+	variable ShrinkSpeed is set to 1.3;
+	variable moveNumber is set to 200;
+	variable scoreNumber is set to 0;
+	variable Timer is set to 20;
+	variable shrinkIntervalTime is set to 50;
+	
+	variable gameMusic is a new Audio with the name "kika.mp3";
+
+	ColorList1 is an array with the colors red and green;
+	GoalColor is math.random 
+
+}
