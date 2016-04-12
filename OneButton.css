@@ -15,6 +15,16 @@ canvas{
 	color:white;
 	font-size:60px;
 	font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	margin-top:10%;
+	margin-left:30%;
+}
+
+.mainmenubuttons{
+	cursor:pointer;
+}
+
+#Title{
+	margin-top:-10%;
 }
 
 #StartGame {
@@ -32,4 +42,9 @@ canvas{
 	height:100px;
 	border:solid white 4px;
 	padding-left:50px;
+}
+
+img{
+	position:absolute;
+	margin-left:-30%;
 }

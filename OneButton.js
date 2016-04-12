@@ -1,4 +1,14 @@
 window.addEventListener("load", function() {
+
+	document.oncontextmenu=RightMouseDown;
+	document.onmousedown = mouseDown; 
+
+	function mouseDown(e) {
+		if (e.which==3) {//righClick
+			alert("No right clicking for you");
+		}
+	}
+	     function RightMouseDown() { return false;}
 	
 	keyState = {};
 	window.addEventListener('keydown',function(e){
@@ -11,14 +21,13 @@ window.addEventListener("load", function() {
 	canvas = document.getElementById("canvas");
 	ctx = canvas.getContext("2d");
 	canvas.style.visibility = "visible";
-	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight;
+	canvas.width = screen.width;
+	canvas.height = screen.height;
 
 	Initialize();
 
-	var StartText = "Press L to begin (and to play with)";
+	var StartText = "Press SpaceBar to begin";
 	PositionText(StartText);
-
 
 });
 
@@ -39,12 +48,12 @@ function BeginGame() {
 	}, 1000);
 	gameMusic.volume = 1;
 	if (typeof gameMusic.loop == 'boolean'){
-    	gameMusic.loop = true;
+		gameMusic.loop = true;
 	}else {
-    gameMusic.addEventListener('ended', function() {
-        this.currentTime = 0;
-        this.play();
-    }, false);
+	gameMusic.addEventListener('ended', function() {
+		this.currentTime = 0;
+		this.play();
+	}, false);
 	}
 	gameMusic.play();
 	Drawing = setInterval(function(){draw()}, DrawingIntervalTime);
@@ -66,10 +75,10 @@ function EndGame() {
 	clearInterval(Shrinking);
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	var EndText = "Je tijd is om";
-	ctx.fillText(EndText,250,400);
+	ctx.fillText(EndText,750,400);
 
 	var Endscore = "Je eind score is: " + scoreNumber + " punten";
-	ctx.fillText(Endscore,250,450);
+	ctx.fillText(Endscore,750,450);
 
 }
 
@@ -78,12 +87,12 @@ function Initialize() {
 	allowChange = true;
 	expanding = false;
 	Game = false;
-	ExpandSpeed = 3;
+	ExpandSpeed = 1.5;
 	ShrinkSpeed = 1.3;
 	scoreNumber = 0;
 	Timer = 60;
 	shrinkIntervalTime = 50;
-	DrawingIntervalTime = 11;
+	DrawingIntervalTime = 13;
 	moveNumber = (DrawingIntervalTime * 50);
 
 	ctx.font = "40px Arial";
@@ -150,9 +159,9 @@ function Indicator() {
 }
 
 function Attributes() {
-
+	ScoreX = window.innerWidth - (2.5 * 100);
 	var Score = "Score: " + scoreNumber;
-	ctx.fillText(Score,1500,50);
+	ctx.fillText(Score,ScoreX,50);
 
 	var Time = "Time: " + Timer;
 	ctx.fillText(Time,10,50);
@@ -185,7 +194,6 @@ function draw() {
 	Attributes();
 	MakePlayer();
 	update();
-	
 }
 
 function update() {
@@ -195,8 +203,8 @@ function update() {
     	allowChange = false;
 		setTimeout(function(){
 		allowChange = true;
-		littleX = Math.floor((Math.random()*((canvas.width / 2))) + 300);
-		littleY = 300;
+		littleX = Math.floor((Math.random()*((canvas.width / 2))) + 550);
+		littleY = Math.floor((Math.random()*(600) + 50));
 		direction = 1;
 		changeGoal(littleX,littleY,GoalWidthSmall[GoalWHS],GoalWidthSmall[GoalWHS]);
 		distanceX = GoalX - PlayerX;
@@ -217,8 +225,8 @@ function update() {
 		allowChange = false;
 		setTimeout(function(){
 		allowChange = true;
-		bigX = Math.floor((Math.random()*((canvas.width / 2) - 400)) + 50);
-		bigY = 100;
+		bigX = Math.floor((Math.random()*((canvas.width / 2) - 350)) + 50);
+		bigY = Math.floor((Math.random()*(600) + 50));
 		direction = -1;
 		changeGoal(bigX,bigY,GoalWidthBig[GoalWHB],GoalWidthBig[GoalWHB]);
 		distanceX = PlayerX - GoalX;
@@ -238,7 +246,7 @@ function update() {
 function changeGoal(newX, newY, width, height)
 {
 	//verander pos en size van goal
-	console.log("Change Log");
+	//console.log("Change Log");
 	GoalX = newX;
 	GoalY = newY;
 	GoalWidth = width;
@@ -269,7 +277,7 @@ function bonusPoint() {
 	pointvalue7 = 400;
 	pointvalue8 = 350;
 
-	BonusPointTime = 100;
+	BonusPointTime = 400;
 
 	if(pointcondition1) {
 		setTimeout(function(){
@@ -277,7 +285,7 @@ function bonusPoint() {
 		Attributes();
 		}, BonusPointTime);
 		console.log(pointvalue1);
-		ctx.fillText("+ " + pointvalue1,670,90);
+		//ctx.fillText("+ " + pointvalue1,670,90);
 
 	}
 	else if(pointcondition2) {
@@ -286,7 +294,7 @@ function bonusPoint() {
 		Attributes();
 		}, BonusPointTime);
 		console.log(pointvalue2);
-		ctx.fillText("+ " + pointvalue2,670,90);
+		//ctx.fillText("+ " + pointvalue2,670,90);
 
 	}
 	else if (pointcondition3) {
@@ -295,7 +303,7 @@ function bonusPoint() {
 		Attributes();
 		}, BonusPointTime);
 		console.log(pointvalue3);
-		ctx.fillText("+ " + pointvalue3,670,90);
+		//ctx.fillText("+ " + pointvalue3,670,90);
 	}
 	else if (pointcondition4) {
 		setTimeout(function(){
@@ -303,7 +311,7 @@ function bonusPoint() {
 		Attributes();
 		}, BonusPointTime);
 		console.log(pointvalue4);
-		ctx.fillText("+ " + pointvalue4,670,90);
+		//ctx.fillText("+ " + pointvalue4,670,90);
 	}
 	else if (pointcondition5) {
 		setTimeout(function(){
@@ -311,7 +319,7 @@ function bonusPoint() {
 		Attributes();
 		}, BonusPointTime);
 		console.log(pointvalue5);
-		ctx.fillText("+ " + pointvalue5,670,90);
+		//ctx.fillText("+ " + pointvalue5,670,90);
 	}
 	else if (pointcondition6) {
 		setTimeout(function(){
@@ -319,7 +327,7 @@ function bonusPoint() {
 		Attributes();
 		}, BonusPointTime);
 		console.log(pointvalue6);
-		ctx.fillText("+ " + pointvalue6,670,90);
+		//ctx.fillText("+ " + pointvalue6,670,90);
 	}
 	else if (pointcondition7) {
 		setTimeout(function(){
@@ -327,7 +335,7 @@ function bonusPoint() {
 		Attributes();
 		}, BonusPointTime);
 		console.log(pointvalue7);
-		ctx.fillText("+ " + pointvalue7,670,90);
+		//ctx.fillText("+ " + pointvalue7,670,90);
 	}
 	else {
 		setTimeout(function(){
@@ -335,32 +343,40 @@ function bonusPoint() {
 		Attributes();
 		}, BonusPointTime);
 		console.log(pointvalue8);
-		ctx.fillText("+ " + pointvalue8,670,90);
+		//ctx.fillText("+ " + pointvalue8,670,90);
 	}
 }
 
 function keyLoop() {
-	var L = 76;
+	//var L = 76;
+	var SpaceBar = 32;
 
-	if (keyState[L] && Game == false) {
+	if (keyState[SpaceBar] && Game == false) {
 		BeginGame();
 		Game = true;
 	}
-	if (keyState[L] && expanding == true && Game == true) {
+	if (keyState[SpaceBar] && expanding == true && Game == true) {
 		Player.width += ExpandSpeed;
 		Player.height += ExpandSpeed;
 		//IndicatorWidth += ExpandSpeed;
 		//IndicatorHeight += ExpandSpeed;
 	}
-	if (keyState[L] && expanding == false && Game == true) {
+	if (keyState[SpaceBar] && expanding == false && Game == true) {
 		Player.width -= ExpandSpeed;
 		Player.height -= ExpandSpeed;
 		//IndicatorWidth += ExpandSpeed;
 		//IndicatorHeight += ExpandSpeed;
 	}
 
-	setTimeout(keyLoop, 40);
+	setTimeout(keyLoop, 20);
 }
+
+window.onkeydown = function(e) {
+    if(e.keyCode == 32 && e.target == document.body) {
+        e.preventDefault();
+        return false;
+    }
+};
 /*
 if (PlayerX <= GoalX - 0.2 && PlayerX >= GoalX + 0.2 && PlayerY <= GoalY - 0.2 && PlayerY >= GoalY + 0.2) {
 	}
