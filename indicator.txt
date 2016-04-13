@@ -1,0 +1,21 @@
+//IndicatorX = (PlayerX - 5);
+//IndicatorY = (PlayerY - 5);
+//IndicatorWidth = (Player.width + 10);
+//IndicatorHeight = (Player.height + 10);
+
+//r = 0;
+//g = 255;
+//b = 0;
+//alpha = 0.2;
+
+function Indicator() {
+	if(Player.width > (GoalWidthBig[GoalWHB] - 10) && Player.width < GoalWidthBig[GoalWHB] && Player.height > (GoalWidthBig[GoalWHB] - 10) && Player.height < GoalWidthBig[GoalWHB]) {
+		alpha = 1;
+	}
+	else {
+		alpha = 0.1;
+	}
+	ctx.strokeStyle = "rgba("+r+","+g+","+b+","+alpha+")";
+	ctx.lineWidth = 15;
+	ctx.strokeRect(IndicatorX, IndicatorY, IndicatorWidth, IndicatorHeight);
+}

@@ -4,7 +4,7 @@ window.addEventListener("load", function() {
 	document.onmousedown = mouseDown; 
 
 	function mouseDown(e) {
-		if (e.which==3) {//righClick
+		if (e.which==3) { //righClick
 			alert("No right clicking for you");
 		}
 	}
@@ -29,6 +29,8 @@ window.addEventListener("load", function() {
 	var StartText = "Press SpaceBar to begin";
 	PositionText(StartText);
 
+	//ObjectChosen = Math.floor(Math.random() * 3);
+
 });
 
 var Player = {
@@ -46,7 +48,7 @@ function BeginGame() {
 			Timer--;
 		}
 	}, 1000);
-	gameMusic.volume = 1;
+	gameMusic.volume = 0;
 	if (typeof gameMusic.loop == 'boolean'){
 		gameMusic.loop = true;
 	}else {
@@ -99,11 +101,8 @@ function Initialize() {
 	ctx.fillStyle = 'white';
 	gameMusic = new Audio('game-music-2.wav');
 
-	ColorList1 = ["red", "green"];
-	GoalColor = Math.floor(Math.random()*ColorList1.length);
-
-	ColorList2 = ["orange", "violet", "purple"];
-	PlayerColor = Math.floor(Math.random()*ColorList2.length);
+	ColorList = ["orange", "violet", "purple"];
+	PlayerColor = Math.floor(Math.random()*ColorList.length);
 
 	GoalWidthBig = [200, 250];
 	GoalWHB = Math.floor(Math.random()*GoalWidthBig.length);
@@ -118,44 +117,20 @@ function Initialize() {
 	PlayerY = 600;
 	GoalX = 50;
 	GoalY = 80;
-	//IndicatorX = (PlayerX - 5);
-	//IndicatorY = (PlayerY - 5);
-	//IndicatorWidth = (Player.width + 10);
-	//IndicatorHeight = (Player.height + 10);
 
 	direction = -1;
 	distanceX = PlayerX - GoalX;
 	distanceY = PlayerY - GoalY;
-	//r = 0;
-	//g = 255;
-	//b = 0;
-	//alpha = 0.2;
-
 }
 
 function MakePlayer() {
-	ctx.fillStyle = (ColorList2[PlayerColor]);
+	ctx.fillStyle = (ColorList[PlayerColor]);
 	ctx.fillRect(PlayerX, PlayerY, Player.width, Player.height);
 }
 
 function MakeGoal(GoalX, GoalY, GoalWidth, GoalHeight) {
-	//ctx.lineWidth = 1;
-	//ctx.strokeStyle = (ColorList1[GoalColor]);
-	//ctx.strokeRect(GoalX, GoalY, GoalWidth, GoalHeight);
 	ctx.fillStyle = 'white';
 	ctx.fillRect(GoalX, GoalY, GoalWidth, GoalHeight);
-}
-
-function Indicator() {
-	if(Player.width > (GoalWidthBig[GoalWHB] - 10) && Player.width < GoalWidthBig[GoalWHB] && Player.height > (GoalWidthBig[GoalWHB] - 10) && Player.height < GoalWidthBig[GoalWHB]) {
-		alpha = 1;
-	}
-	else {
-		alpha = 0.1;
-	}
-	ctx.strokeStyle = "rgba("+r+","+g+","+b+","+alpha+")";
-	ctx.lineWidth = 15;
-	ctx.strokeRect(IndicatorX, IndicatorY, IndicatorWidth, IndicatorHeight);
 }
 
 function Attributes() {
@@ -197,7 +172,6 @@ function draw() {
 }
 
 function update() {
-	//scoreNumber += Math.floor(Math.random()*20);
     if (allowChange == true && direction == -1 && PlayerX >= GoalX - 0.1 && PlayerX <= GoalX + 0.1 && PlayerY >= GoalY - 0.1 && PlayerY <= GoalY + 0.1) {
     	bonusPoint();
     	allowChange = false;
@@ -214,10 +188,6 @@ function update() {
 	else if (direction == -1) {
         expanding = true;
 		movePlayer((distanceX / moveNumber),(distanceY / moveNumber));
-		
-		//IndicatorX = (PlayerX - 5);
-		//IndicatorY = (PlayerY - 5);
-		//Indicator();
 	}
 
 	if (allowChange == true && direction == 1 && PlayerX >= GoalX - 0.1 && PlayerX <= GoalX + 0.1 && PlayerY >= GoalY - 0.1 && PlayerY <= GoalY + 0.1) {
@@ -259,96 +229,63 @@ function movePlayer(mx,my)
 
 }
 
+
+
 function bonusPoint() {
-	pointcondition1 = (Player.width == GoalWidth && Player.height == GoalHeight);
-	pointcondition2 = (Player.width > (GoalWidth - 10) && Player.width < GoalWidth && Player.height > (GoalHeight - 10) && Player.height < GoalHeight);
-	pointcondition3 = (Player.width > (GoalWidth - 20) && Player.width < GoalWidth && Player.height > (GoalHeight - 20) && Player.height < GoalHeight);
-	pointcondition4 = (Player.width > (GoalWidth - 30) && Player.width < GoalWidth && Player.height > (GoalHeight - 30) && Player.height < GoalHeight);
-	pointcondition5 = (Player.width > (GoalWidth - 40) && Player.width < GoalWidth && Player.height > (GoalHeight - 40) && Player.height < GoalHeight);
-	pointcondition6 = (Player.width > (GoalWidth - 50) && Player.width < GoalWidth && Player.height > (GoalHeight - 50) && Player.height < GoalHeight);
-	pointcondition7 = (Player.width > (GoalWidth - 60) && Player.width < GoalWidth && Player.height > (GoalHeight - 60) && Player.height < GoalHeight);
-
-	pointvalue1 = 1000;
-	pointvalue2 = 900;
-	pointvalue3 = 800;
-	pointvalue4 = 700;
-	pointvalue5 = 600;
-	pointvalue6 = 500;
-	pointvalue7 = 400;
-	pointvalue8 = 350;
-
 	BonusPointTime = 400;
+	Check1 = Player.width -= GoalWidth;
+	Check2 = Player.height -= GoalHeight;
+	console.log("Check11: " + Check1);
 
-	if(pointcondition1) {
-		setTimeout(function(){
-		scoreNumber = scoreNumber += pointvalue1;
-		Attributes();
-		}, BonusPointTime);
-		console.log(pointvalue1);
-		//ctx.fillText("+ " + pointvalue1,670,90);
-
+	if (Check1 < 1 || Check2 < 1) {
+		Check1 *= -1;
+		Check2 *= -1;
 	}
-	else if(pointcondition2) {
+	console.log("Check12: " + Check1);
+	if (Check1 <= 10 || Check2 <= 10) {
 		setTimeout(function(){
-		scoreNumber = scoreNumber += pointvalue2;
-		Attributes();
+			scoreNumber = scoreNumber += 900;
+			//Attributes();
 		}, BonusPointTime);
-		console.log(pointvalue2);
-		//ctx.fillText("+ " + pointvalue2,670,90);
-
 	}
-	else if (pointcondition3) {
+	else if (Check1 <= 20 || Check2 <= 20) {
 		setTimeout(function(){
-		scoreNumber = scoreNumber += pointvalue3;
-		Attributes();
+			scoreNumber = scoreNumber += 800;
 		}, BonusPointTime);
-		console.log(pointvalue3);
-		//ctx.fillText("+ " + pointvalue3,670,90);
 	}
-	else if (pointcondition4) {
+	else if (Check1 <= 30 || Check2 <= 30) {
 		setTimeout(function(){
-		scoreNumber += pointvalue4;
-		Attributes();
+			scoreNumber = scoreNumber += 700;
 		}, BonusPointTime);
-		console.log(pointvalue4);
-		//ctx.fillText("+ " + pointvalue4,670,90);
 	}
-	else if (pointcondition5) {
+	else if (Check1 <= 40 || Check2 <= 40) {
 		setTimeout(function(){
-		scoreNumber += pointvalue5;
-		Attributes();
+			scoreNumber = scoreNumber += 600;
 		}, BonusPointTime);
-		console.log(pointvalue5);
-		//ctx.fillText("+ " + pointvalue5,670,90);
 	}
-	else if (pointcondition6) {
+	else if (Check1 <= 50 || Check2 <= 50) {
 		setTimeout(function(){
-		scoreNumber += pointvalue6;
-		Attributes();
+			scoreNumber = scoreNumber += 500;
 		}, BonusPointTime);
-		console.log(pointvalue6);
-		//ctx.fillText("+ " + pointvalue6,670,90);
 	}
-	else if (pointcondition7) {
+	else if (Check1 <= 60 || Check2 <= 60) {
 		setTimeout(function(){
-		scoreNumber += pointvalue7;
-		Attributes();
+			scoreNumber = scoreNumber += 400;
 		}, BonusPointTime);
-		console.log(pointvalue7);
-		//ctx.fillText("+ " + pointvalue7,670,90);
+	}
+	else if (Check1 <= 70 || Check2 <= 70) {
+		setTimeout(function(){
+			scoreNumber = scoreNumber += 300;
+		}, BonusPointTime);
 	}
 	else {
 		setTimeout(function(){
-		scoreNumber += pointvalue8;
-		Attributes();
+			scoreNumber = scoreNumber += 150;
 		}, BonusPointTime);
-		console.log(pointvalue8);
-		//ctx.fillText("+ " + pointvalue8,670,90);
 	}
 }
 
 function keyLoop() {
-	//var L = 76;
 	var SpaceBar = 32;
 
 	if (keyState[SpaceBar] && Game == false) {
@@ -358,14 +295,10 @@ function keyLoop() {
 	if (keyState[SpaceBar] && expanding == true && Game == true) {
 		Player.width += ExpandSpeed;
 		Player.height += ExpandSpeed;
-		//IndicatorWidth += ExpandSpeed;
-		//IndicatorHeight += ExpandSpeed;
 	}
 	if (keyState[SpaceBar] && expanding == false && Game == true) {
 		Player.width -= ExpandSpeed;
 		Player.height -= ExpandSpeed;
-		//IndicatorWidth += ExpandSpeed;
-		//IndicatorHeight += ExpandSpeed;
 	}
 
 	setTimeout(keyLoop, 20);
@@ -377,33 +310,3 @@ window.onkeydown = function(e) {
         return false;
     }
 };
-/*
-if (PlayerX <= GoalX - 0.2 && PlayerX >= GoalX + 0.2 && PlayerY <= GoalY - 0.2 && PlayerY >= GoalY + 0.2) {
-	}
-if (Player.width == GoalWHB[GoalWidthBig] && Player.height == GoalWHB[GoalWidthBig]) {
-		win = true;
-		setTimeout(function(){ 
-			ctx.clearRect(0, 0, canvas.width, canvas.height);
-			ctx.fillStyle = "black";
-			ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-			ctx.font = "90px Verdana";
-			ctx.fillStyle = "#3366FF";
-			ctx.fillText("You Won!",180,300);
-		}, 150);
-	}
-	else {
-		setTimeout(function(){ 
-			ctx.clearRect(0, 0, canvas.width, canvas.height);
-			ctx.fillStyle = "black";
-			ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-			ctx.font = "90px Verdana";
-			ctx.fillStyle = "#3366FF";
-			ctx.fillText("You've Lost!",150,300);
-		}, 100);
-
-	}
-
-
-*/
