@@ -237,8 +237,8 @@ function movePlayer(mx,my)
 
 function bonusPoint() {
 	BonusPointTime = 400;
-	Check1 = Player.width -= GoalWidth;
-	Check2 = Player.height -= GoalHeight;
+	Check1 = Player.width - GoalWidth;
+	Check2 = Player.height - GoalHeight;
 	//console.log("Check11: " + Check1);
 
 	if (Check1 < 1 || Check2 < 1) {
