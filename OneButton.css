@@ -44,7 +44,26 @@ canvas{
 	padding-left:50px;
 }
 
+#Usertest {
+	position:absolute;
+	margin-top:400px;
+	width:350px;
+	height:100px;
+	border:solid white 4px;
+	padding-left:50px;
+}
+
 img{
 	position:absolute;
 	margin-left:-30%;
+}
+
+#vid1, #vid3 {
+	margin-left:10%;
+}
+
+#vid2, #vid4 {
+	margin-left:20%;
+	margin-top:2%;
+
 }

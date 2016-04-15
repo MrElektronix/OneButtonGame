@@ -1,0 +1,51 @@
+Video's: 
+
+	- In het begin niet duidelijk welke toets je moet gebruiken
+	- In het begin niet duidelijk wat je moet doen en hoe je dat moet doen
+	- Geen indicatie van het kleiner worden en groter worden van je speler
+	- Een speler gaf aan te willen stoppen midden in het spel en het was frustrerend dat dat niet kon
+
+	- Time glitch als je doorgaat na het eindscherm
+	(disabelen van key als Time = 0 zou dit misschien kunnen verhelpen)
+
+	- Te intensief / te Moeilijk voor speler, maar de spelers zijn daardoor ook heel erg gefocust. 
+
+	 ("het is lastig - Amelie")
+	("dit is zo moeilijk - Mama")
+	("Ik krijg pijn - Mama")
+
+	- Main Menu Maken
+	- Demo / Uitleg maken in Main Menu
+
+VragenLijst: 
+	Negatief: 
+
+	- Spelers snapte wat het doel van het spel was
+	- Het spel had weinig actie, ging veel te snel, veel herhaling en deed na enige tijd pijn aan de hand/vinger
+	- Een speler vond het irritant dat je de knop constant opnieuw moest indrukken en dat je hem niet kon vasthouden
+	- Geen goeie aanduiding of je het goed of fout deed
+	- Puntentelling was verwarrend. (het leek alsof t alleenmaar doorliep)
+	- De speler snapt niet wat je moet doen met het groter en kleiner worden en wanneer je dat moet doen
+
+	Positief:
+	- De leukheid van het spel werd gemiddeld beoordeelt (3 op een schaal van 5)
+	- De muziek was leuk
+	- De moeilijkheid was juist ook goed , want daardoor wou je juist meer moeite doen om te winnen
+	- De kleuren zijn leuk
+	- Het snelle klikken werd als iets uitdagends gezien
+	- De goeie maat krijgen van je goal is een leuke mechanic
+
+
+	- De L toets was niet het meest comfortabele. De spatiebalk zou fijner zijn
+	- De L toets kan wel alleen dan beter aangeven dat je daarmee moet spelen
+
+	Adviezen:
+	- Meer kleur, Goal op meerdere plekken laten verschijnen, meer onverwachte dingen.
+	- Demo/ Tutorial van hoe het spel werkt en duidelijk laten zien wanneer je iets goed doet en wanneer je hebt gescoord
+
+
+
+
+
+
+	

@@ -37,18 +37,61 @@ var Player = {
 	width: 100,
 	height: 100
 }
+
+function Initialize() {
+	allowChange = true;
+	expanding = false;
+	Game = false;
+	ExpandSpeed = 1.5;
+	ShrinkSpeed = 1.3;
+	scoreNumber = 0;
+	Timer = 60;
+	shrinkIntervalTime = 50;
+	DrawingIntervalTime = 13;
+	moveNumber = (DrawingIntervalTime * 50);
+	Space = true;
+	RestartTimer = 8;
+	keyLoop();
+
+	ctx.font = "40px Arial";
+	ctx.fillStyle = 'white';
+	gameMusic = new Audio('game-music-2.wav');
+
+	ColorList = ["orange", "violet", "purple"];
+	PlayerColor = Math.floor(Math.random()*ColorList.length);
+
+	GoalWidthBig = [200, 250];
+	GoalWHB = Math.floor(Math.random()*GoalWidthBig.length);
+
+	GoalWidthSmall = [50, 100];
+	GoalWHS = Math.floor(Math.random()*GoalWidthSmall.length);
+
+	GoalWidth = 200;
+	GoalHeight = 200;
+		
+	PlayerX = 600;
+	PlayerY = 600;
+	GoalX = 50;
+	GoalY = 80;
+
+	direction = -1;
+	distanceX = PlayerX - GoalX;
+	distanceY = PlayerY - GoalY;
+}
+
 function BeginGame() {
 	canvas.style.visibility = "visible";
 	setInterval(function(){
 		if (Timer == 0){
 			Timer = 0;
 			EndGame();
+			Game = false;
 		}
 		else {
 			Timer--;
 		}
 	}, 1000);
-	gameMusic.volume = 0;
+	gameMusic.volume = 1;
 	if (typeof gameMusic.loop == 'boolean'){
 		gameMusic.loop = true;
 	}else {
@@ -82,45 +125,15 @@ function EndGame() {
 	var Endscore = "Je eind score is: " + scoreNumber + " punten";
 	ctx.fillText(Endscore,750,450);
 
-}
+	var ResTimer = "Je kan opnieuw spelen in: " + RestartTimer + " seconden";
+	PositionText(ResTimer);
+	RestartTimer--;
 
-function Initialize() {
-	keyLoop();
-	allowChange = true;
-	expanding = false;
-	Game = false;
-	ExpandSpeed = 1.5;
-	ShrinkSpeed = 1.3;
-	scoreNumber = 0;
-	Timer = 60;
-	shrinkIntervalTime = 50;
-	DrawingIntervalTime = 13;
-	moveNumber = (DrawingIntervalTime * 50);
-
-	ctx.font = "40px Arial";
-	ctx.fillStyle = 'white';
-	gameMusic = new Audio('game-music-2.wav');
-
-	ColorList = ["orange", "violet", "purple"];
-	PlayerColor = Math.floor(Math.random()*ColorList.length);
-
-	GoalWidthBig = [200, 250];
-	GoalWHB = Math.floor(Math.random()*GoalWidthBig.length);
-
-	GoalWidthSmall = [50, 100];
-	GoalWHS = Math.floor(Math.random()*GoalWidthSmall.length);
-
-	GoalWidth = 200;
-	GoalHeight = 200;
-		
-	PlayerX = 600;
-	PlayerY = 600;
-	GoalX = 50;
-	GoalY = 80;
-
-	direction = -1;
-	distanceX = PlayerX - GoalX;
-	distanceY = PlayerY - GoalY;
+	Space = false;
+	setTimeout(function(){
+		location.reload();
+		Space = true;
+	}, ((RestartTimer * 1000) + 500))
 }
 
 function MakePlayer() {
@@ -151,14 +164,10 @@ function ChangeObject() {
 	if(expanding == true) {
 		Player.width -= ShrinkSpeed;
 		Player.height -= ShrinkSpeed;
-		//IndicatorWidth -= ShrinkSpeed;
-		//IndicatorHeight -= ShrinkSpeed;
 	}
 	if(expanding == false) {
 		Player.width += ShrinkSpeed;
 		Player.height += ShrinkSpeed;
-		//IndicatorWidth -= ShrinkSpeed;
-		//IndicatorHeight -= ShrinkSpeed;
 	}
 
 }
@@ -207,8 +216,6 @@ function update() {
 		expanding = false;
 		movePlayer((distanceX / -moveNumber),(distanceY / -moveNumber));
 	}
-
-
 }
 
 
@@ -226,22 +233,19 @@ function movePlayer(mx,my)
 {
 	PlayerX -= mx;
 	PlayerY -= my;
-
 }
-
-
 
 function bonusPoint() {
 	BonusPointTime = 400;
 	Check1 = Player.width -= GoalWidth;
 	Check2 = Player.height -= GoalHeight;
-	console.log("Check11: " + Check1);
+	//console.log("Check11: " + Check1);
 
 	if (Check1 < 1 || Check2 < 1) {
 		Check1 *= -1;
 		Check2 *= -1;
 	}
-	console.log("Check12: " + Check1);
+	//console.log("Check12: " + Check1);
 	if (Check1 <= 10 || Check2 <= 10) {
 		setTimeout(function(){
 			scoreNumber = scoreNumber += 900;
@@ -273,14 +277,9 @@ function bonusPoint() {
 			scoreNumber = scoreNumber += 400;
 		}, BonusPointTime);
 	}
-	else if (Check1 <= 70 || Check2 <= 70) {
-		setTimeout(function(){
-			scoreNumber = scoreNumber += 300;
-		}, BonusPointTime);
-	}
 	else {
 		setTimeout(function(){
-			scoreNumber = scoreNumber += 150;
+			scoreNumber = scoreNumber += 250;
 		}, BonusPointTime);
 	}
 }
@@ -288,15 +287,15 @@ function bonusPoint() {
 function keyLoop() {
 	var SpaceBar = 32;
 
-	if (keyState[SpaceBar] && Game == false) {
+	if (keyState[SpaceBar] && Game == false && Space == true) {
 		BeginGame();
 		Game = true;
 	}
-	if (keyState[SpaceBar] && expanding == true && Game == true) {
+	if (keyState[SpaceBar] && expanding == true && Game == true && Space == true) {
 		Player.width += ExpandSpeed;
 		Player.height += ExpandSpeed;
 	}
-	if (keyState[SpaceBar] && expanding == false && Game == true) {
+	if (keyState[SpaceBar] && expanding == false && Game == true && Space == true) {
 		Player.width -= ExpandSpeed;
 		Player.height -= ExpandSpeed;
 	}
