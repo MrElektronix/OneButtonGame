@@ -42,10 +42,3 @@ VragenLijst:
 	Adviezen:
 	- Meer kleur, Goal op meerdere plekken laten verschijnen, meer onverwachte dingen.
 	- Demo/ Tutorial van hoe het spel werkt en duidelijk laten zien wanneer je iets goed doet en wanneer je hebt gescoord
-
-
-
-
-
-
-	

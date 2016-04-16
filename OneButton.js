@@ -4,7 +4,7 @@ window.addEventListener("load", function() {
 	document.onmousedown = mouseDown; 
 
 	function mouseDown(e) {
-		if (e.which==3) { //righClick
+		if (e.which == 3) { //righClick
 			alert("No right clicking for you");
 		}
 	}
@@ -47,7 +47,7 @@ function Initialize() {
 	scoreNumber = 0;
 	Timer = 60;
 	shrinkIntervalTime = 50;
-	DrawingIntervalTime = 13;
+	DrawingIntervalTime = 14;
 	moveNumber = (DrawingIntervalTime * 50);
 	Space = true;
 	RestartTimer = 8;
@@ -146,6 +146,12 @@ function MakeGoal(GoalX, GoalY, GoalWidth, GoalHeight) {
 	ctx.fillRect(GoalX, GoalY, GoalWidth, GoalHeight);
 }
 
+function Indicator() {
+	ctx.lineWidth = 2;
+	ctx.strokeStyle = "#3399FF";
+	ctx.strokeRect(GoalX, GoalY, Player.width, Player.height);
+}
+
 function Attributes() {
 	ScoreX = window.innerWidth - (2.5 * 100);
 	var Score = "Score: " + scoreNumber;
@@ -176,6 +182,7 @@ function draw() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	MakeGoal(GoalX, GoalY, GoalWidth, GoalHeight);
 	Attributes();
+	Indicator();
 	MakePlayer();
 	update();
 }
